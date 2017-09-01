@@ -1,0 +1,8 @@
+.DS_Store
+.git*
+example/
+node_modules/
+src/
+build/
+webpack.config.js
+yarn.lock
