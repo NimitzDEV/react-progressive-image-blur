@@ -1,18 +1,17 @@
 import React from 'react'
-import styled from 'styled-components'
 import { boxBlurImage } from './superfastblur'
 
-const ImgWrapper = styled.figure`
-  position: relative;
-  overflow: hidden;
-`
-const Image = styled.img`opacity: ${props => (props.styleShowImg ? 1 : 0)};`
-const Canvas = styled.canvas`
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2;
-`
+const inlineStyleWrapper = {
+  position: 'relative',
+  overflow: 'hidden'
+}
+
+const inlineStyleCanvas = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  zIndex: 2
+}
 
 // the first value always will be the thumbnail
 // the last value will always be the original file
@@ -36,7 +35,8 @@ export class DeferImg extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      resolutions: props.resolutions || customImgResolutions || defaultImgResolution,
+      resolutions:
+        props.resolutions || customImgResolutions || defaultImgResolution,
       fileinfo: {
         ready: false,
         filename: '',
@@ -269,21 +269,25 @@ export class DeferImg extends React.Component {
 
   render() {
     if (!this.state.fileinfo.ready || !this.state.canLoad)
-      return <ImgWrapper id={this.state.idImgHolder} />
+      return <div id={this.state.idImgHolder} style={inlineStyleWrapper} />
     return (
-      <ImgWrapper className={this.props.className} id={this.state.idImgHolder}>
+      <div
+        className={this.props.className}
+        id={this.state.idImgHolder}
+        style={inlineStyleWrapper}
+      >
         {this.state.loadHd ? (
-          <Image
+          <img
             alt={this.props.alt}
             id={this.state.idHdImgHolder}
             src={this.haveImage({ thumb: false })}
             onLoad={() => {
               this.loadHdFinished()
             }}
-            styleShowImg={this.state.finished}
+            style={{ opacity: this.state.finished ? 1 : 0 }}
           />
         ) : (
-          <Image
+          <img
             alt={this.props.alt}
             id={this.state.idLowResImgHolder}
             src={this.haveImage({ thumb: true })}
@@ -291,14 +295,16 @@ export class DeferImg extends React.Component {
               this.switchToHd()
               this.unregisterScrollListener()
             }}
-            styleShowImg={this.state.loadHd}
+            style={{ opacity: this.state.loadHd ? 1 : 0 }}
           />
         )}
-        {this.state.finished ? null : <Canvas id={this.state.idBlurCanvas} />}
+        {this.state.finished ? null : (
+          <canvas id={this.state.idBlurCanvas} style={inlineStyleCanvas} />
+        )}
         {this.props.figcaption ? (
           <figcaption>{this.props.figcaption}</figcaption>
         ) : null}
-      </ImgWrapper>
+      </div>
     )
   }
 }
