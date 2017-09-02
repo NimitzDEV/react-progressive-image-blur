@@ -36,7 +36,7 @@ export class DeferImg extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      resolutions: customImgResolutions || defaultImgResolution,
+      resolutions: props.resolutions || customImgResolutions || defaultImgResolution,
       fileinfo: {
         ready: false,
         filename: '',
@@ -303,7 +303,7 @@ export class DeferImg extends React.Component {
   }
 }
 
-export function DeferImgSettings({ resolutions }) {
+export function DeferImgGlobalSettings({ resolutions }) {
   customImgResolutions = (resolutions && Object.assign({}, resolutions)) || null
   return true
 }
