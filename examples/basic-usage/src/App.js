@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './App.css'
 
-import DeferImg from 'react-progressive-image'
+import {DeferImg} from 'react-progressive-image-blur'
 
 class App extends Component {
   render() {
