@@ -42,7 +42,7 @@ How to use
 ----------
 **Prepare different images for progressive image loading**
 
-This module accepts a prop named `imgResolution`, it accepts a resolution list for a resolution list, defaults to the following:
+This module accepts a prop named `resolutions`, it accepts a resolution list for a resolution list, defaults to the following:
 
     {
       50: '-w50',
@@ -55,29 +55,33 @@ the key will be the width, and the correspondent value will be the suffix of the
 (You can see the request process above)
 
 **Using Gulp and gulp-responsive to produce different images**
+
 You can see the [gulp-responsive](https://github.com/mahnunchik/gulp-responsive) example in `example`
 
 **Using it in your projects**
+
 Basic usage
 
     import React, {Component} from 'react'
-    import {DeferImg, DeferImgSettings} from 'react-progressive-image-blur'
-    // if you want to supply your own resolution list
-    // call DeferImgSettings
-    DeferImgSettings({resolution:{10:'-thumb',1180:'-original'}})
+    import {DeferImg, DeferGlobalSettings} from 'react-progressive-image-blur'
+    // if you don't want to set props every time,
+    // you can call DeferImgGlobalSettings
+    // The settings passed from props will overwrite global settings
+    DeferGlobalSettings({resolution:{10:'-thumb',1180:'-original'}})
 
     export default class MyApp extends Component {
 	    constructor(props) {
 		    super(props)
-		}
-		render() {
-			return (
-				<DeferImg src="/profile.png" alt="My profile avatar" />
-			)
-		}
+		  }
+  		render() {
+  			return (
+  				<DeferImg src="/profile.png" alt="My profile avatar" />
+  			)
+  		}
     }
 
 **What props will DeferImg accepts**
+
 Currently the module only accepts a limited set of custom settings
 
  - `src` **(MUST)** the original image source without any suffix
@@ -85,5 +89,6 @@ Currently the module only accepts a limited set of custom settings
  - `className`class names for the module
  - `figcaption`If set, will append a `<figcaption>` tag after `<img>`
 
-**What settings will DeferImgSettings accepts**
-Currently only accepts a `resolution` to set your own resolution list
+**What settings will DeferGlobalSettings accepts**
+
+ - `resolutions` to set your own resolution list
